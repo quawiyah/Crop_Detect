@@ -15,7 +15,7 @@ import NotFound from "./pages/NotFound";
 
 function App() {
   return (
-    <BrowserRouter basename="/Crop_Detect">
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
