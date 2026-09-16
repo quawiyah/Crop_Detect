@@ -44,11 +44,9 @@ function Settings() {
 
           <div className="grid gap-6 lg:grid-cols-2">
 
-            <PersonalInfo />
+            <PasswordUpdate />
 
             <NotificationPreferences />
-
-            <PasswordUpdate />
 
             <ConnectedDevices />
 

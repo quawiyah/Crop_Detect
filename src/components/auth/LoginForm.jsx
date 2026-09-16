@@ -149,7 +149,7 @@ function LoginForm() {
 
       {/* Divider */}
 
-      <div className="my-8 flex items-center">
+      {/* <div className="my-8 flex items-center">
 
         <div className="h-px flex-1 bg-gray-300"></div>
 
@@ -159,11 +159,11 @@ function LoginForm() {
 
         <div className="h-px flex-1 bg-gray-300"></div>
 
-      </div>
+      </div> */}
 
       {/* Social */}
 
-      <div className="grid grid-cols-2 gap-4">
+      {/* <div className="grid grid-cols-2 gap-4">
 
         <button
           type="button"
@@ -181,7 +181,7 @@ function LoginForm() {
           Microsoft
         </button>
 
-      </div>
+      </div> */}
 
       {/* Signup */}
 

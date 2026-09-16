@@ -1,20 +1,26 @@
 import { useRef, useState } from "react";
 import { FaUpload, FaCamera } from "react-icons/fa";
 
-function UploadCard() {
+function UploadCard({ onDetect, loading }) {
   const fileInputRef = useRef(null);
   const cameraInputRef = useRef(null);
 
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
 
     if (!file) return;
 
+    setSelectedFile(file);
     setSelectedImage(URL.createObjectURL(file));
+  };
 
-    console.log(file);
+  const handleAnalyze = () => {
+    if (!selectedFile) return;
+
+    onDetect(selectedFile);
   };
 
   return (
@@ -29,8 +35,8 @@ function UploadCard() {
         {selectedImage ? (
           <img
             src={selectedImage}
-            alt="Preview"
-            className="w-72 rounded-xl mb-6"
+            alt="Selected crop"
+            className="w-72 max-h-72 object-contain rounded-xl mb-6"
           />
         ) : (
           <>
@@ -50,14 +56,16 @@ function UploadCard() {
 
           <button
             onClick={() => fileInputRef.current.click()}
-            className="bg-green-700 text-white px-8 py-3 rounded-xl hover:bg-green-800"
+            disabled={loading}
+            className="bg-green-700 text-white px-8 py-3 rounded-xl hover:bg-green-800 disabled:opacity-50"
           >
             Browse Files
           </button>
 
           <button
             onClick={() => cameraInputRef.current.click()}
-            className="border border-gray-300 px-8 py-3 rounded-xl flex items-center gap-3 hover:bg-gray-100"
+            disabled={loading}
+            className="border border-gray-300 px-8 py-3 rounded-xl flex items-center gap-3 hover:bg-gray-100 disabled:opacity-50"
           >
             <FaCamera />
             Camera Upload
@@ -65,16 +73,24 @@ function UploadCard() {
 
         </div>
 
-        {/* Browse File Input */}
+        {selectedFile && (
+          <button
+            onClick={handleAnalyze}
+            disabled={loading}
+            className="mt-6 w-full max-w-sm bg-green-700 text-white px-8 py-3 rounded-xl font-semibold hover:bg-green-800 disabled:opacity-50"
+          >
+            {loading ? "Analyzing Image..." : "Analyze Image"}
+          </button>
+        )}
+
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/*"
+          accept="image/jpeg,image/png"
           onChange={handleFileChange}
           className="hidden"
         />
 
-        {/* Camera Input */}
         <input
           ref={cameraInputRef}
           type="file"

@@ -61,7 +61,7 @@ function Hero() {
           </Link>
 
           <Link
-            to=""
+            to="/about"
             className="w-full rounded-xl border border-white/60 bg-white/50 px-10 py-4 font-bold text-green-800 shadow-sm backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:bg-white/70 sm:w-auto"
           >
             Learn More
