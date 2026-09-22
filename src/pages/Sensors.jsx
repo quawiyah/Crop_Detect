@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 import Sidebar from "../components/dashboard/Sidebar";
 import SensorHeader from "../components/sensors/SensorHeader";
@@ -8,50 +8,68 @@ import NetworkHealth from "../components/sensors/NetworkHealth";
 import CameraStream from "../components/sensors/CameraStream";
 
 function Sensors() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] =
+    useState(false);
 
-  // Sensor connection state
-  const [sensorConnected, setSensorConnected] = useState(false);
+  const [sensorConnected, setSensorConnected] =
+    useState(false);
 
-  // Used when the user manually clicks Connect Sensor
-  const [connectRequest, setConnectRequest] = useState(0);
-
-  const cameraRef = useRef(null);
+  const [sensorData, setSensorData] =
+    useState({
+      temperature: null,
+      humidity: null,
+      soilMoisture: null,
+      soilStatus: null,
+    });
 
   return (
-    <div className="flex min-h-screen bg-green-50">
+    <div className="flex min-h-screen bg-[#F5FAF5]">
+
+      {/* SIDEBAR */}
 
       <Sidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
-        sensorConnected={sensorConnected}
-        setSensorConnected={setSensorConnected}
-        setConnectRequest={setConnectRequest}
-        cameraRef={cameraRef}
       />
 
+      {/* MAIN CONTENT */}
+
       <main className="flex-1 p-6 lg:ml-72">
+
+        {/* HEADER */}
 
         <SensorHeader
           setSidebarOpen={setSidebarOpen}
         />
 
-        <SensorGrid />
+        {/* SENSOR CARDS */}
+
+        <SensorGrid
+          sensorData={sensorData}
+          sensorConnected={sensorConnected}
+        />
+
+        {/* CAMERA + RIGHT SIDE */}
 
         <div className="mt-8 grid gap-6 lg:grid-cols-3">
 
-          {/* Left Side */}
+          {/* LEFT SIDE */}
+
           <div className="lg:col-span-2">
 
             <CameraStream
-              ref={cameraRef}
-              setSensorConnected={setSensorConnected}
-              connectRequest={connectRequest}
+              setSensorConnected={
+                setSensorConnected
+              }
+              setSensorData={
+                setSensorData
+              }
             />
 
           </div>
 
-          {/* Right Side */}
+          {/* RIGHT SIDE */}
+
           <div>
 
             <AIRecommendation />

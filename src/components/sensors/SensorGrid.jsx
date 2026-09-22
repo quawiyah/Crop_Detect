@@ -2,73 +2,166 @@ import {
   FaTemperatureHigh,
   FaTint,
   FaWater,
-  FaFlask,
-  FaSun,
-  FaWind,
 } from "react-icons/fa";
 
 import SensorCard from "./SensorCard";
 
-const sensors = [
-  {
-    title: "Ambient Temperature",
-    value: "24",
-    unit: "°C",
-    icon: <FaTemperatureHigh />,
-    footerLeft: "Range: 18° - 32°",
-    footerRight: "+2%",
-    status: "LIVE",
-  },
-  {
-    title: "Air Humidity",
-    value: "65",
-    unit: "%",
-    icon: <FaTint />,
-    footerLeft: "Target: 60 - 70%",
-    footerRight: "Optimal",
-    status: "LIVE",
-  },
-  {
-    title: "Soil Moisture",
-    value: "42",
-    unit: "%",
-    icon: <FaWater />,
-    footerLeft: "Critical: <20%",
-    footerRight: "Check Pump",
-    status: "LIVE",
-  },
-  // {
-  //   title: "Soil pH",
-  //   value: "6.5",
-  //   unit: "",
-  //   icon: <FaFlask />,
-  //   footerLeft: "Status: Slightly Acidic",
-  //   footerRight: "Balanced",
-  //   status: "LIVE",
-  // },
-  // {
-  //   title: "Light Exposure",
-  //   value: "12",
-  //   unit: "k lux",
-  //   icon: <FaSun />,
-  //   footerLeft: "Peak: 2:00 PM",
-  //   footerRight: "Strong",
-  //   status: "LIVE",
-  // },
-  // {
-  //   title: "Wind Speed",
-  //   value: "8",
-  //   unit: "km/h",
-  //   icon: <FaWind />,
-  //   footerLeft: "Direction: North-East",
-  //   footerRight: "Gentle",
-  //   status: "LIVE",
-  // },
-];
+function SensorGrid({
+  sensorData,
+  sensorConnected,
+}) {
+  const temperature =
+    sensorData?.temperature;
 
-function SensorGrid() {
+  const humidity =
+    sensorData?.humidity;
+
+  const soilMoisture =
+    sensorData?.soilMoisture;
+
+  const formatValue = (value) => {
+    if (
+      value === null ||
+      value === undefined
+    ) {
+      return "--";
+    }
+
+    return Number(value).toFixed(1);
+  };
+
+  const getTemperatureStatus = () => {
+    if (
+      temperature === null ||
+      temperature === undefined
+    ) {
+      return "No data";
+    }
+
+    if (temperature < 18) {
+      return "Low";
+    }
+
+    if (temperature > 32) {
+      return "High";
+    }
+
+    return "Optimal";
+  };
+
+  const getHumidityStatus = () => {
+    if (
+      humidity === null ||
+      humidity === undefined
+    ) {
+      return "No data";
+    }
+
+    if (humidity < 60) {
+      return "Low";
+    }
+
+    if (humidity > 70) {
+      return "High";
+    }
+
+    return "Optimal";
+  };
+
+  const getSoilMoistureStatus = () => {
+    if (
+      soilMoisture === null ||
+      soilMoisture === undefined
+    ) {
+      return "No data";
+    }
+
+    if (soilMoisture < 20) {
+      return "Dry";
+    }
+
+    if (soilMoisture < 40) {
+      return "Low";
+    }
+
+    if (soilMoisture <= 70) {
+      return "Optimal";
+    }
+
+    return "Wet";
+  };
+
+  const sensors = [
+    {
+      title: "Ambient Temperature",
+
+      value:
+        formatValue(temperature),
+
+      unit: "°C",
+
+      icon: <FaTemperatureHigh />,
+
+      footerLeft:
+        "Range: 18° - 32°",
+
+      footerRight:
+        getTemperatureStatus(),
+
+      status:
+        sensorConnected
+          ? "LIVE"
+          : "OFFLINE",
+    },
+
+    {
+      title: "Air Humidity",
+
+      value:
+        formatValue(humidity),
+
+      unit: "%",
+
+      icon: <FaTint />,
+
+      footerLeft:
+        "Target: 60 - 70%",
+
+      footerRight:
+        getHumidityStatus(),
+
+      status:
+        sensorConnected
+          ? "LIVE"
+          : "OFFLINE",
+    },
+
+    {
+      title: "Soil Moisture",
+
+      value:
+        formatValue(soilMoisture),
+
+      unit: "%",
+
+      icon: <FaWater />,
+
+      footerLeft:
+        "Critical: <20%",
+
+      footerRight:
+        getSoilMoistureStatus(),
+
+      status:
+        sensorConnected
+          ? "LIVE"
+          : "OFFLINE",
+    },
+  ];
+
   return (
     <section className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+
       {sensors.map((sensor) => (
         <SensorCard
           key={sensor.title}
@@ -81,6 +174,7 @@ function SensorGrid() {
           status={sensor.status}
         />
       ))}
+
     </section>
   );
 }

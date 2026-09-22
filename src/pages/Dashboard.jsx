@@ -1,9 +1,8 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 import Sidebar from "../components/dashboard/Sidebar";
 import Topbar from "../components/dashboard/Topbar";
 import StatsCards from "../components/dashboard/StatsCards";
-import FarmMap from "../components/dashboard/FarmMap";
 import RecentAlerts from "../components/dashboard/RecentAlerts";
 import AIInsight from "../components/dashboard/AIInsight";
 import CameraStream from "../components/sensors/CameraStream";
@@ -11,57 +10,61 @@ import CameraStream from "../components/sensors/CameraStream";
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Sensor connection state
-  const [sensorConnected, setSensorConnected] = useState(false);
-  
-  // Used when the user manually clicks Connect Sensor
-  const [connectRequest, setConnectRequest] = useState(0);
-  
-  const cameraRef = useRef(null);
-
   return (
-    <div className="flex bg-gray-50 min-h-screen">
+    <div className="flex min-h-screen bg-gray-50">
 
+      {/* SIDEBAR */}
       <Sidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
-        sensorConnected={sensorConnected}
-        setSensorConnected={setSensorConnected}
-        setConnectRequest={setConnectRequest}
-        cameraRef={cameraRef}
       />
 
-      <main className="flex-1 lg:ml-72 p-6 md:p-8">
+      {/* MAIN CONTENT */}
+      <main className="flex-1 p-6 md:p-8 lg:ml-72">
 
-        <Topbar setSidebarOpen={setSidebarOpen} />
+        {/* TOPBAR */}
+        <Topbar
+          setSidebarOpen={setSidebarOpen}
+        />
 
+        {/* STATISTICS */}
         <StatsCards />
 
-        <div className="grid lg:grid-cols-3 gap-8 mt-8">
+        {/* MAIN DASHBOARD CONTENT */}
+        <div className="mt-8 grid gap-8 lg:grid-cols-3">
 
+          {/* LEFT SIDE */}
           <div className="lg:col-span-2">
+
+            {/* FARM MAP */}
             {/* <FarmMap /> */}
-            <CameraStream
-              ref={cameraRef}
-              setSensorConnected={setSensorConnected}
-              connectRequest={connectRequest}
-            />
+
+            {/* CAMERA STREAM */}
+            <CameraStream />
+
           </div>
 
+          {/* RIGHT SIDE */}
           <div>
+
             <RecentAlerts />
+
             <AIInsight />
+
           </div>
 
         </div>
 
-        {/* <div className="grid lg:grid-cols-2 gap-8 mt-8">
+        {/* ADDITIONAL DASHBOARD SECTIONS */}
+        {/*
+        <div className="mt-8 grid gap-8 lg:grid-cols-2">
 
           <DiseaseChart />
 
           <SensorTable />
 
-        </div> */}
+        </div>
+        */}
 
       </main>
 
