@@ -22,7 +22,7 @@ function Topbar({ setSidebarOpen }) {
           <FaBars />
         </button>
         <div>
-            <h1 className="text-4xl font-bold text-gray-800">
+            <h1 className="text-3xl font-bold text-gray-800">
               Farm Overview
             </h1>
 
@@ -53,13 +53,13 @@ function Topbar({ setSidebarOpen }) {
 
         {/* Notification */}
 
-        <button className="relative bg-white shadow rounded-xl p-3 hover:bg-gray-100 transition">
+        {/* <button className="relative bg-white shadow rounded-xl p-3 hover:bg-gray-100 transition">
 
           <FaBell className="text-green-700 text-lg" />
 
           <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500"></span>
 
-        </button>
+        </button> */}
 
       </div>
 

@@ -2,9 +2,9 @@ import { FaEye } from "react-icons/fa";
 
 function PasswordUpdate() {
   return (
-    <div className="rounded-3xl bg-white p-6 shadow-sm border border-gray-100">
+    <div className="rounded-2xl bg-white p-6 shadow-sm border border-gray-100">
 
-      <h2 className="mb-6 text-2xl font-bold">
+      <h2 className="mb-6 text-xl font-bold">
         Password Update
       </h2>
 

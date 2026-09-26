@@ -1,8 +1,8 @@
 function FarmDetails({ user }) {
   return (
-    <div className="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm">
+    <div className="rounded-2xl border border-gray-100 bg-white p-8 shadow-sm">
 
-      <h2 className="mb-8 text-3xl font-bold text-gray-800">
+      <h2 className="mb-8 text-2xl font-bold text-gray-800">
         Farm Details
       </h2>
 
@@ -51,7 +51,7 @@ function Info({ title, value }) {
         {title}
       </p>
 
-      <h4 className="mt-2 text-xl font-semibold text-gray-800">
+      <h4 className="mt-2 text-lg font-semibold text-gray-800">
         {value || "Not provided"}
       </h4>
     </div>

@@ -19,9 +19,9 @@ const activities = [
 
 function RecentActivity() {
   return (
-    <div className="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm">
+    <div className="rounded-2xl border border-gray-100 bg-white p-8 shadow-sm">
 
-      <h2 className="mb-6 text-3xl font-bold text-gray-800">
+      <h2 className="mb-6 text-2xl font-bold text-gray-800">
         Recent Activity
       </h2>
 

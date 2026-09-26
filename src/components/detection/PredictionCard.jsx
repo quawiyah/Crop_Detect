@@ -5,9 +5,9 @@ function PredictionCard({ prediction, loading, error }) {
   // Loading state
   if (loading) {
     return (
-      <div className="rounded-3xl bg-white p-6 shadow-sm border border-gray-200">
+      <div className="rounded-2xl bg-white p-6 shadow-sm border border-gray-200">
 
-        <h2 className="text-2xl font-bold">
+        <h2 className="text-xl font-bold">
           Prediction Result
         </h2>
 
@@ -28,9 +28,9 @@ function PredictionCard({ prediction, loading, error }) {
   // Error state
   if (error) {
     return (
-      <div className="rounded-3xl bg-white p-6 shadow-sm border border-gray-200">
+      <div className="rounded-2xl bg-white p-6 shadow-sm border border-gray-200">
 
-        <h2 className="text-2xl font-bold">
+        <h2 className="text-xl font-bold">
           Prediction Result
         </h2>
 
@@ -49,9 +49,9 @@ function PredictionCard({ prediction, loading, error }) {
   // No prediction yet
   if (!prediction) {
     return (
-      <div className="rounded-3xl bg-white p-6 shadow-sm border border-gray-200">
+      <div className="rounded-2xl bg-white p-6 shadow-sm border border-gray-200">
 
-        <h2 className="text-2xl font-bold">
+        <h2 className="text-xl font-bold">
           Prediction Result
         </h2>
 
@@ -72,7 +72,7 @@ function PredictionCard({ prediction, loading, error }) {
     );
   }
 
-  const diseaseName = prediction.disease
+  const conditionName = prediction.conditionName
     ?.replaceAll("_", " ")
     ?.replace(/\b\w/g, (letter) => letter.toUpperCase());
 
@@ -91,12 +91,12 @@ function PredictionCard({ prediction, loading, error }) {
     "Follow the recommended treatment as soon as possible.";
 
   return (
-    <div className="rounded-3xl bg-white p-6 shadow-sm border border-gray-200">
+    <div className="rounded-2xl bg-white p-6 shadow-sm border border-gray-200">
 
       {/* Header */}
       <div className="flex justify-between items-center gap-4">
 
-        <h2 className="text-2xl font-bold">
+        <h2 className="text-xl font-bold">
           Prediction Result
         </h2>
 
@@ -118,12 +118,11 @@ function PredictionCard({ prediction, loading, error }) {
 
       {/* Disease */}
       <p className="text-gray-400 uppercase mt-6">
-        Disease Name
+        Disease Name:
+        <span className="font-semibold text-gray-700 ml-1">
+          {conditionName}
+        </span>
       </p>
-
-      <h1 className="text-2xl font-semibold mt-1">
-        {diseaseName}
-      </h1>
 
       {/* Confidence */}
       <div className="mt-8">

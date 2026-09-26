@@ -24,13 +24,13 @@ function UploadCard({ onDetect, loading }) {
   };
 
   return (
-    <div className="rounded-3xl bg-white p-6 shadow-sm border border-gray-200">
+    <div className="rounded-2xl bg-white p-6 shadow-sm border border-gray-200">
 
-      <h2 className="text-2xl font-bold mb-6">
+      <h2 className="text-xl font-bold mb-6">
         Image Upload
       </h2>
 
-      <div className="border-2 border-dashed border-gray-300 rounded-3xl py-16 flex flex-col items-center">
+      <div className="border-2 border-dashed border-gray-300 rounded-2xl py-16 flex flex-col items-center">
 
         {selectedImage ? (
           <img
@@ -42,7 +42,7 @@ function UploadCard({ onDetect, loading }) {
           <>
             <FaUpload className="text-5xl text-green-700 mb-5" />
 
-            <h3 className="text-xl font-semibold">
+            <h3 className="text-lg font-semibold">
               Drag & Drop Crop Images
             </h3>
 

@@ -64,11 +64,6 @@ export async function login(phoneNumber, password) {
     );
   }
 
-  // console.log(
-  //   "Phone number used to get user:",
-  //   loggedInPhoneNumber
-  // );
-
   // STEP 4: GET USER DETAILS
   const userResponse = await fetch(
     `${API_URL}/user/${encodeURIComponent(loggedInPhoneNumber)}`,
@@ -125,7 +120,7 @@ export async function login(phoneNumber, password) {
     new Event("userUpdated")
   );
 
-  // console.log("========== USER SAVED ==========");
+  console.log("========== USER SAVED ==========");
   // console.log(
   //   "Saved user:",
   //   JSON.parse(localStorage.getItem("user"))

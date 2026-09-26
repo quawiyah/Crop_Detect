@@ -2,16 +2,19 @@ import { useState } from "react";
 
 import Sidebar from "../components/dashboard/Sidebar";
 import Topbar from "../components/dashboard/Topbar";
-import StatsCards from "../components/dashboard/StatsCards";
-import RecentAlerts from "../components/dashboard/RecentAlerts";
-import AIInsight from "../components/dashboard/AIInsight";
-import CameraStream from "../components/sensors/CameraStream";
+
+import CameraFeed from "../components/smart/CameraFeed";
+import SensorData from "../components/smart/SensorData";
+
+import useSmartEyes from "../hooks/useSmartEyes";
 
 function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const smartEyes = useSmartEyes();
+
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-[#F5FAF5]">
 
       {/* SIDEBAR */}
       <Sidebar
@@ -27,47 +30,42 @@ function Dashboard() {
           setSidebarOpen={setSidebarOpen}
         />
 
-        {/* STATISTICS */}
-        <StatsCards />
+        {/* SENSOR DATA */}
+        <SensorData
+          sensorData={smartEyes.sensorData}
+          connected={smartEyes.connected}
+          requestSensorData={smartEyes.requestSensorData}
+        />
 
-        {/* MAIN DASHBOARD CONTENT */}
-        <div className="mt-8 grid gap-8 lg:grid-cols-3">
+        {/* CAMERA SECTION */}
+        <div className="mt-8">
 
-          {/* LEFT SIDE */}
-          <div className="lg:col-span-2">
-
-            {/* FARM MAP */}
-            {/* <FarmMap /> */}
-
-            {/* CAMERA STREAM */}
-            <CameraStream />
-
-          </div>
-
-          {/* RIGHT SIDE */}
-          <div>
-
-            <RecentAlerts />
-
-            <AIInsight />
-
-          </div>
-
-        </div>
-
-        {/* ADDITIONAL DASHBOARD SECTIONS */}
-        {/*
-        <div className="mt-8 grid gap-8 lg:grid-cols-2">
-
-          <DiseaseChart />
-
-          <SensorTable />
+          <CameraFeed
+            connected={smartEyes.connected}
+            streamActive={smartEyes.streamActive}
+            streamUrl={smartEyes.streamUrl}
+            fps={smartEyes.fps}
+            frameBytes={smartEyes.frameBytes}
+            detectionResults={
+              smartEyes.detection?.results || []
+            }
+            videoElementRef={
+              smartEyes.videoElementRef
+            }
+            startStream={
+              smartEyes.startStream
+            }
+            stopStream={
+              smartEyes.stopStream
+            }
+            captureImage={
+              smartEyes.captureImage
+            }
+          />
 
         </div>
-        */}
 
       </main>
-
     </div>
   );
 }

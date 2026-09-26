@@ -149,7 +149,7 @@ function FarmerProfile() {
     <>
       <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-center">
         <div>
-          <h1 className="text-4xl font-bold text-gray-800">
+          <h1 className="text-3xl font-bold text-gray-800">
             Farmer Profile
           </h1>
 
@@ -202,13 +202,6 @@ function FarmerProfile() {
                 label="Full Name"
                 name="name"
                 value={formData.name}
-                onChange={handleChange}
-              />
-
-              <FormField
-                label="Phone Number"
-                name="phoneNumbers"
-                value={formData.phoneNumbers}
                 onChange={handleChange}
               />
 

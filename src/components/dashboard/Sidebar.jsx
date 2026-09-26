@@ -24,10 +24,15 @@ const menuItems = [
     path: "/detect",
   },
   {
-    title: "Sensor Monitoring",
+    title: "Smart Monitoring",
     icon: <FaBroadcastTower />,
-    path: "/sensors",
+    path: "/smart",
   },
+  // {
+  //   title: "Sensor Monitoring",
+  //   icon: <FaBroadcastTower />,
+  //   path: "/sensors",
+  // },
   {
     title: "Farmer Profile",
     icon: <FaUser />,
@@ -37,7 +42,7 @@ const menuItems = [
     title: "Settings",
     icon: <FaCog />,
     path: "/settings",
-  },
+  }
 ];
 
 function Sidebar({
