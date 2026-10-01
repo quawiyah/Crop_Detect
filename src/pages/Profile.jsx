@@ -20,12 +20,12 @@ function Profile() {
 
         <main className="flex-1">
 
-          <button
+          {/* <button
             className="mb-4 text-2xl lg:hidden"
             onClick={() => setSidebarOpen(true)}
           >
             <FaBars />
-          </button>
+          </button> */}
 
           <FarmerProfile />
 

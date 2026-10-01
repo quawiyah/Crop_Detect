@@ -4,11 +4,13 @@ function DetectionResult({
 }) {
   if (loading) {
     return (
-      <section className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+      <section className="rounded-xl border border-gray-200 bg-white p-3 shadow-sm sm:p-5">
         <Header />
-        <div className="flex min-h-[220px] items-center justify-center">
+
+        <div className="flex min-h-[200px] items-center justify-center sm:min-h-[220px]">
           <div className="text-center">
             <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-green-600" />
+
             <p className="mt-3 text-sm text-gray-500">
               Analyzing image…
             </p>
@@ -20,15 +22,15 @@ function DetectionResult({
 
   if (!detection) {
     return (
-      <section className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+      <section className="rounded-xl border border-gray-200 bg-white p-3 shadow-sm sm:p-5">
         <Header />
 
-        <div className="mt-4 rounded-xl border border-dashed border-gray-200 bg-gray-50 p-8 text-center">
-          <p className="font-medium text-gray-600">
+        <div className="mt-4 rounded-xl border border-dashed border-gray-200 bg-gray-50 p-6 text-center sm:p-8">
+          <p className="text-sm font-medium text-gray-600 sm:text-base">
             No detection yet
           </p>
 
-          <p className="mt-1 text-sm text-gray-400">
+          <p className="mt-1 text-xs leading-5 text-gray-400 sm:text-sm">
             Start the camera stream and smartEyes
             will display the latest AI result here.
           </p>
@@ -48,32 +50,34 @@ function DetectionResult({
   );
 
   return (
-    <section className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <section className="rounded-xl border border-gray-200 bg-white p-3 shadow-sm sm:p-5">
       <Header />
 
-      <div className="mt-4 rounded-xl border border-gray-200 bg-gray-50 p-4">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div>
+      <div className="mt-4 rounded-xl border border-gray-200 bg-gray-50 p-3 sm:p-4">
+        {/* Main detection */}
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
               Detected event
             </p>
 
-            <h3 className="mt-1 break-words text-xl font-bold text-gray-800">
+            <h3 className="mt-1 break-words text-lg font-bold text-gray-800 sm:text-xl">
               {detection.className}
             </h3>
 
             {detection.summary && (
-              <p className="mt-1 text-sm text-gray-500">
+              <p className="mt-1 break-words text-sm leading-5 text-gray-500">
                 {detection.summary}
               </p>
             )}
           </div>
 
-          <span className="rounded-full bg-green-50 px-3 py-1.5 text-sm font-bold text-green-700">
+          <span className="self-start whitespace-nowrap rounded-full bg-green-50 px-3 py-1.5 text-xs font-bold text-green-700 sm:text-sm">
             {detection.confidence}
           </span>
         </div>
 
+        {/* Confidence */}
         <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-gray-200">
           <div
             className="h-full rounded-full bg-green-600 transition-all duration-500"
@@ -83,6 +87,7 @@ function DetectionResult({
           />
         </div>
 
+        {/* Tags */}
         <div className="mt-4 flex flex-wrap gap-2">
           {detection.domain !== "UNKNOWN" && (
             <Tag type="purple">
@@ -93,12 +98,10 @@ function DetectionResult({
           {detection.severity !== "NONE" && (
             <Tag
               type={
-                detection.severity ===
-                  "CRITICAL" ||
+                detection.severity === "CRITICAL" ||
                 detection.severity === "HIGH"
                   ? "danger"
-                  : detection.severity ===
-                      "MODERATE"
+                  : detection.severity === "MODERATE"
                     ? "warning"
                     : "success"
               }
@@ -107,8 +110,7 @@ function DetectionResult({
             </Tag>
           )}
 
-          {detection.healthStatus !==
-            "unknown" && (
+          {detection.healthStatus !== "unknown" && (
             <Tag
               type={
                 detection.healthStatus
@@ -123,12 +125,12 @@ function DetectionResult({
           )}
         </div>
 
-        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+        {/* Information */}
+        <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
           <InfoItem
             label="Status"
             value={
-              detection.healthStatus !==
-              "unknown"
+              detection.healthStatus !== "unknown"
                 ? detection.healthStatus.toUpperCase()
                 : detection.severity !== "NONE"
                   ? detection.severity
@@ -144,11 +146,8 @@ function DetectionResult({
           <InfoItem
             label="AI modes"
             value={
-              detection.availableAiModes
-                .length
-                ? detection.availableAiModes.join(
-                    ", "
-                  )
+              detection.availableAiModes.length
+                ? detection.availableAiModes.join(", ")
                 : "No AI components reported"
             }
           />
@@ -158,14 +157,14 @@ function DetectionResult({
             value={
               detection.djlEngines.length
                 ? detection.djlEngines.join(", ")
-                : detection.availableAiModes
-                      .length
+                : detection.availableAiModes.length
                   ? "Provider-based analysis"
                   : "No DJL engine"
             }
           />
         </div>
 
+        {/* Other results */}
         {detection.results.length > 1 && (
           <div className="mt-4 space-y-2">
             <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
@@ -177,29 +176,25 @@ function DetectionResult({
               .map((result, index) => (
                 <div
                   key={`${result.className}-${index}`}
-                  className="flex items-center justify-between gap-3 rounded-lg border border-gray-200 bg-white px-3 py-2"
+                  className="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 sm:flex-row sm:items-center sm:justify-between"
                 >
-                  <div>
-                    <p className="text-sm font-semibold text-gray-700">
-                      {result.className ||
-                        "Unknown"}
+                  <div className="min-w-0">
+                    <p className="break-words text-sm font-semibold text-gray-700">
+                      {result.className || "Unknown"}
                     </p>
 
-                    <p className="text-xs text-gray-400">
-                      {result.domain ||
-                        "UNKNOWN"}
+                    <p className="break-words text-xs text-gray-400">
+                      {result.domain || "UNKNOWN"}
+
                       {result.healthStatus &&
-                      result.healthStatus !==
-                        "unknown"
+                      result.healthStatus !== "unknown"
                         ? ` · ${result.healthStatus}`
                         : ""}
                     </p>
                   </div>
 
                   <span className="text-sm font-bold text-green-600">
-                    {formatConfidence(
-                      result.probability
-                    )}
+                    {formatConfidence(result.probability)}
                   </span>
                 </div>
               ))}
@@ -212,21 +207,19 @@ function DetectionResult({
 
 function Header() {
   return (
-    <div className="flex flex-wrap items-start justify-between gap-3">
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-wider text-green-600">
-          Latest analysis
-        </p>
+    <div>
+      <p className="text-xs font-semibold uppercase tracking-wider text-green-600">
+        Latest analysis
+      </p>
 
-        <h2 className="mt-1 text-xl font-semibold text-gray-800">
-          Detection Result
-        </h2>
+      <h2 className="mt-1 text-lg font-semibold text-gray-800 sm:text-xl">
+        Detection Result
+      </h2>
 
-        <p className="mt-1 text-sm text-gray-500">
-          Review the latest AI finding, confidence,
-          and response guidance.
-        </p>
-      </div>
+      <p className="mt-1 text-sm leading-5 text-gray-500">
+        Review the latest AI finding, confidence,
+        and response guidance.
+      </p>
     </div>
   );
 }
@@ -238,7 +231,7 @@ function InfoItem({ label, value }) {
         {label}
       </p>
 
-      <p className="mt-1 break-words text-sm font-semibold text-gray-700">
+      <p className="mt-1 break-words text-sm font-semibold leading-5 text-gray-700">
         {value || "--"}
       </p>
     </div>
@@ -271,9 +264,13 @@ function Tag({ type, children }) {
 function formatConfidence(value) {
   let number = Number(value);
 
-  if (!Number.isFinite(number)) return "--";
+  if (!Number.isFinite(number)) {
+    return "--";
+  }
 
-  if (number <= 1) number *= 100;
+  if (number <= 1) {
+    number *= 100;
+  }
 
   return `${number.toFixed(1)}%`;
 }

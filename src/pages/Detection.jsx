@@ -1,6 +1,7 @@
 import Sidebar from "../components/dashboard/Sidebar";
 import Topbar from "../components/dashboard/Topbar";
 import { useState } from "react";
+import { FaBars } from "react-icons/fa";
 
 import UploadCard from "../components/detection/UploadCard";
 import PredictionCard from "../components/detection/PredictionCard";
@@ -85,16 +86,23 @@ function Detection() {
       {/* MAIN CONTENT */}
       <main className="flex-1 p-6 md:p-8 lg:ml-72">
 
-        {/* PAGE HEADER */}
-        <div className="mt-6">
-          <h1 className="text-3xl font-bold text-gray-900">
-            Disease Detection
-          </h1>
-
-          <p className="mt-1 text-gray-500">
-            Upload a leaf or canopy image and the AI will return a
-            diagnosis in seconds.
-          </p>
+        <div className="flex items-center gap-4">
+          <button
+            className="lg:hidden text-2xl"
+            onClick={() => setSidebarOpen(true)}
+          >
+            <FaBars />
+          </button>
+          <div className="mb-5 sm:mb-6">
+            <h1 className="text-2xl font-bold text-gray-900">
+              Disease Detection
+            </h1>
+        
+            <p className="mt-1 text-gray-500">
+              Upload a leaf or canopy image and the AI will return a
+              diagnosis in seconds.
+            </p>
+          </div>
         </div>
 
         {/* CONTENT */}

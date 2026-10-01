@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 
+import { FaBars } from "react-icons/fa";
+
 import ProfileCard from "./ProfileCard";
 import FarmDetails from "./FarmDetails";
+import Sidebar from "../../components/dashboard/Sidebar";
 
 const API_URL = "https://crop-disease-detector-8nqt.onrender.com";
 
@@ -21,6 +24,7 @@ function FarmerProfile() {
 
   const [formData, setFormData] = useState(user);
   const [saving, setSaving] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const loadUser = () => {
@@ -148,14 +152,26 @@ function FarmerProfile() {
   return (
     <>
       <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-center">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-800">
-            Farmer Profile
-          </h1>
-
-          <p className="mt-3 text-gray-500">
-            Account and farm information used to personalise predictions.
-          </p>
+        <Sidebar
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+        />
+        <div className="flex items-center gap-4">
+          <button
+            className="lg:hidden text-2xl"
+            onClick={() => setSidebarOpen(true)}
+          >
+            <FaBars />
+          </button>
+          <div className="mb-5 sm:mb-6">
+            <h1 className="text-2xl font-bold text-gray-900">
+              Farmer Profile
+            </h1>
+        
+            <p className="mt-1 text-gray-500">
+              Account and farm information used to personalise predictions.
+            </p>
+          </div>
         </div>
 
         <button

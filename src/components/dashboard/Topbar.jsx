@@ -22,7 +22,7 @@ function Topbar({ setSidebarOpen }) {
           <FaBars />
         </button>
         <div>
-            <h1 className="text-3xl font-bold text-gray-800">
+            <h1 className="text-2xl font-bold text-gray-800">
               Farm Overview
             </h1>
 

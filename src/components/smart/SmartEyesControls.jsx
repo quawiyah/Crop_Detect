@@ -35,24 +35,26 @@ function SmartEyesControls({
   onStatus,
 }) {
   return (
-    <section className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <section className="rounded-xl border border-gray-200 bg-white p-3 shadow-sm sm:p-5">
+      {/* Header */}
       <div className="mb-5">
         <p className="text-xs font-semibold uppercase tracking-wider text-green-600">
           Device control
         </p>
 
-        <h2 className="mt-1 text-xl font-semibold text-gray-800">
+        <h2 className="mt-1 text-lg font-semibold text-gray-800 sm:text-xl">
           Camera Controls
         </h2>
 
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-1 text-sm leading-5 text-gray-500">
           Configure the connected smartEyes camera
           and AI detection behavior.
         </p>
       </div>
 
+      {/* Connection */}
       <div
-        className={`flex items-center justify-between gap-3 rounded-lg border p-3 ${
+        className={`flex flex-col gap-2 rounded-lg border p-3 sm:flex-row sm:items-center sm:justify-between ${
           connected
             ? "border-green-200 bg-green-50"
             : "border-gray-200 bg-gray-50"
@@ -60,7 +62,7 @@ function SmartEyesControls({
       >
         <div className="flex items-center gap-2">
           <span
-            className={`h-2.5 w-2.5 rounded-full ${
+            className={`h-2.5 w-2.5 shrink-0 rounded-full ${
               connected
                 ? "bg-green-500"
                 : "bg-red-500"
@@ -81,6 +83,7 @@ function SmartEyesControls({
         </span>
       </div>
 
+      {/* Device information */}
       <div className="mt-4 space-y-3">
         <Info
           icon={<FaWifi />}
@@ -88,7 +91,7 @@ function SmartEyesControls({
           value={macAddress || "--"}
         />
 
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Info
             icon={<FaSatelliteDish />}
             label="Device ID"
@@ -103,6 +106,7 @@ function SmartEyesControls({
         </div>
       </div>
 
+      {/* AI Focus */}
       <div className="mt-4">
         <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">
           AI focus mode
@@ -111,11 +115,9 @@ function SmartEyesControls({
         <select
           value={focus}
           onChange={(event) =>
-            onFocusChange(
-              event.target.value
-            )
+            onFocusChange(event.target.value)
           }
-          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-100"
+          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-3 text-sm text-gray-700 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-100"
         >
           {focusOptions.map(
             ([value, label]) => (
@@ -130,6 +132,7 @@ function SmartEyesControls({
         </select>
       </div>
 
+      {/* Detection interval */}
       <div className="mt-4">
         <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">
           Detection interval (ms)
@@ -141,11 +144,9 @@ function SmartEyesControls({
           step="1000"
           value={detectionInterval}
           onChange={(event) =>
-            onIntervalChange(
-              event.target.value
-            )
+            onIntervalChange(event.target.value)
           }
-          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-100"
+          className="w-full rounded-lg border border-gray-200 bg-white px-3 py-3 text-sm text-gray-700 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-100"
         />
 
         <p className="mt-1 text-xs text-gray-400">
@@ -153,12 +154,13 @@ function SmartEyesControls({
         </p>
       </div>
 
-      <div className="mt-5 flex flex-wrap gap-2">
+      {/* Actions */}
+      <div className="mt-5 grid grid-cols-1 gap-2 sm:flex sm:flex-wrap">
         {connected ? (
           <button
             type="button"
             onClick={onDisconnect}
-            className="inline-flex items-center gap-2 rounded-lg bg-red-500 px-4 py-2 text-sm font-semibold text-white hover:bg-red-600"
+            className="inline-flex min-h-[42px] w-full items-center justify-center gap-2 rounded-lg bg-red-500 px-4 py-2 text-sm font-semibold text-white hover:bg-red-600 sm:w-auto"
           >
             <FaPlug />
             Disconnect
@@ -168,7 +170,7 @@ function SmartEyesControls({
             type="button"
             onClick={onConnect}
             disabled={connecting}
-            className="inline-flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex min-h-[42px] w-full items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
           >
             <FaPlug />
 
@@ -182,7 +184,7 @@ function SmartEyesControls({
           type="button"
           onClick={onStatus}
           disabled={!connected}
-          className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex min-h-[42px] w-full items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
         >
           <FaCog />
           Check Device
@@ -199,15 +201,17 @@ function Info({
 }) {
   return (
     <div className="rounded-lg border border-gray-200 bg-gray-50 p-3">
-      <div className="flex items-center gap-2 text-green-600">
-        {icon}
+      <div className="flex items-center gap-2">
+        <span className="shrink-0 text-green-600">
+          {icon}
+        </span>
 
-        <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+        <span className="min-w-0 text-xs font-semibold uppercase tracking-wide text-gray-500">
           {label}
         </span>
       </div>
 
-      <p className="mt-2 break-words text-sm font-semibold text-gray-700">
+      <p className="mt-2 break-all text-sm font-semibold text-gray-700">
         {value}
       </p>
     </div>
