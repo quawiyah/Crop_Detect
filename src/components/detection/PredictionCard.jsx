@@ -1,6 +1,6 @@
 import { FaCheckCircle } from "react-icons/fa";
 
-function PredictionCard({ prediction, loading, error }) {
+function PredictionCard({ prediction, loading, error, environmentRecommendation, environmentError }) {
 
   // Loading state
   if (loading) {
@@ -221,6 +221,67 @@ function PredictionCard({ prediction, loading, error }) {
 
           </div>
 
+        </div>
+      )}
+
+      {/* Environment recommendation */}
+      {environmentError && (
+        <div className="mt-6 rounded-2xl border border-yellow-200 bg-yellow-50 p-5 text-sm text-yellow-700">
+          {environmentError}
+        </div>
+      )}
+
+      {environmentRecommendation && (
+        <div className="mt-6 rounded-2xl border border-green-200 bg-green-50 p-5">
+          <h3 className="text-lg font-bold text-gray-800">Environment Recommendation</h3>
+          <p className="mt-2 text-sm font-semibold uppercase tracking-wide text-gray-600">
+            {environmentRecommendation.overallStatus}
+          </p>
+
+          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+            <div className="rounded-xl bg-white p-3 border border-gray-200">
+              <p className="text-xs uppercase text-gray-500">Temperature</p>
+              <p className="mt-1 font-semibold text-gray-800">
+                {environmentRecommendation.temperature}°C
+              </p>
+              <p className="text-xs text-gray-600">
+                {environmentRecommendation.temperatureStatus}
+              </p>
+            </div>
+
+            <div className="rounded-xl bg-white p-3 border border-gray-200">
+              <p className="text-xs uppercase text-gray-500">Humidity</p>
+              <p className="mt-1 font-semibold text-gray-800">
+                {environmentRecommendation.humidity}%
+              </p>
+              <p className="text-xs text-gray-600">
+                {environmentRecommendation.humidityStatus}
+              </p>
+            </div>
+
+            <div className="rounded-xl bg-white p-3 border border-gray-200">
+              <p className="text-xs uppercase text-gray-500">Soil Moisture</p>
+              <p className="mt-1 font-semibold text-gray-800">
+                {environmentRecommendation.soilMoisture}%
+              </p>
+              <p className="text-xs text-gray-600">
+                {environmentRecommendation.soilMoistureStatus}
+              </p>
+            </div>
+          </div>
+
+          <p className="mt-4 text-sm text-gray-700">
+            {environmentRecommendation.message}
+          </p>
+
+          <div className="mt-4">
+            <p className="font-semibold text-gray-800">Recommended actions</p>
+            <ul className="mt-2 list-disc space-y-2 pl-5 text-sm text-gray-700">
+              {(environmentRecommendation.suggestedActions || []).map((action, index) => (
+                <li key={index}>{action}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       )}
 

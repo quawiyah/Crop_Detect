@@ -5,10 +5,10 @@ import {
   useState,
 } from "react";
 
-const BACKEND_HOST =
-  "crop-disease-detector-8nqt.onrender.com";
+import ApiConfig from "../config/ApiConfig";
 
-const API_URL = `https://${BACKEND_HOST}`;
+const API_URL = ApiConfig.getBaseUrl();
+const BACKEND_HOST = new URL(API_URL).host;
 
 const LOCATION = "Field_A";
 
@@ -1387,6 +1387,17 @@ export default function useSmartEyes() {
             file
           );
 
+          const user = JSON.parse(
+            localStorage.getItem("user") || "{}"
+          );
+          const profileEmail = user.email || "";
+          const profileLocation =
+            user.farmLocation ||
+            user.location ||
+            "Abuja";
+          const selectedFocus =
+            focusRef.current || "crop";
+
           formData.append(
             "device_id",
             deviceId
@@ -1404,17 +1415,57 @@ export default function useSmartEyes() {
 
           formData.append(
             "focus",
-            focusRef.current
+            selectedFocus
           );
 
           formData.append(
             "cropType",
-            focusRef.current
+            selectedFocus
           );
+
+          formData.append(
+            "email",
+            profileEmail
+          );
+
+          formData.append(
+            "location",
+            profileLocation
+          );
+
+          const detectionUrl = new URL(
+            `${API_URL}/api/detect/image`
+          );
+          detectionUrl.searchParams.set(
+            "focus",
+            selectedFocus
+          );
+          detectionUrl.searchParams.set(
+            "cropType",
+            selectedFocus
+          );
+          if (profileEmail) {
+            detectionUrl.searchParams.set(
+              "email",
+              profileEmail
+            );
+          }
+          if (deviceId) {
+            detectionUrl.searchParams.set(
+              "deviceId",
+              deviceId
+            );
+          }
+          if (profileLocation) {
+            detectionUrl.searchParams.set(
+              "location",
+              profileLocation
+            );
+          }
 
           const response =
             await fetch(
-              `${API_URL}/api/detect/image`,
+              detectionUrl,
               {
                 method: "POST",
                 body: formData,

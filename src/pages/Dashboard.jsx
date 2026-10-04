@@ -4,6 +4,7 @@ import Sidebar from "../components/dashboard/Sidebar";
 import Topbar from "../components/dashboard/Topbar";
 
 import CameraFeed from "../components/smart/CameraFeed";
+import DetectionResult from "../components/smart/DetectionResult";
 import SensorData from "../components/smart/SensorData";
 
 import useSmartEyes from "../hooks/useSmartEyes";
@@ -70,6 +71,17 @@ function Dashboard() {
               }
               onCapture={
                 smartEyes.captureImage
+              }
+            />
+          </div>
+
+          <div className="mt-8">
+            <DetectionResult
+              detection={
+                smartEyes.detection
+              }
+              loading={
+                smartEyes.loadingDetection
               }
             />
           </div>

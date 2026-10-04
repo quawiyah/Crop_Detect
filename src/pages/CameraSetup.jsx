@@ -6,8 +6,9 @@ import {
   FaCheckCircle,
 } from "react-icons/fa";
 
-const API_URL =
-  "https://crop-disease-detector-8nqt.onrender.com";
+import ApiConfig from "../config/ApiConfig";
+
+const API_URL = ApiConfig.getBaseUrl();
 
 // ============================================================
 // MAC ADDRESS HELPERS

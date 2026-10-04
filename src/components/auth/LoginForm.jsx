@@ -12,7 +12,7 @@ import { login } from "../../services/auth";
 function LoginForm() {
   const navigate = useNavigate();
 
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phonenumber, setPhonenumber] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -24,7 +24,7 @@ function LoginForm() {
 
     setError("");
 
-    if (!phoneNumber || !password) {
+    if (!phonenumber || !password) {
       setError("Please enter your phone number and password.");
       return;
     }
@@ -33,7 +33,7 @@ function LoginForm() {
       setLoading(true);
 
       const data = await login(
-        phoneNumber,
+        phonenumber,
         password
       );
 
@@ -76,8 +76,8 @@ function LoginForm() {
 
           <input
             type="tel"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
+            value={phonenumber}
+            onChange={(e) => setPhonenumber(e.target.value)}
             placeholder="09039731207"
             className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-green-600"
           />
@@ -96,7 +96,12 @@ function LoginForm() {
               type="button"
               className="text-sm text-green-700 hover:underline"
             >
-              Forgot Password?
+              <Link
+                  to="/forgot-password"
+                  className="text-sm font-medium text-green-700 hover:underline"
+              >
+                Forgot password?
+              </Link>
             </button>
 
           </div>
@@ -149,39 +154,11 @@ function LoginForm() {
 
       {/* Divider */}
 
-      {/* <div className="my-8 flex items-center">
 
-        <div className="h-px flex-1 bg-gray-300"></div>
-
-        <span className="mx-4 text-sm text-gray-500">
-          OR CONTINUE WITH
-        </span>
-
-        <div className="h-px flex-1 bg-gray-300"></div>
-
-      </div> */}
 
       {/* Social */}
 
-      {/* <div className="grid grid-cols-2 gap-4">
 
-        <button
-          type="button"
-          className="flex items-center justify-center gap-2 rounded-xl border border-gray-300 py-3 hover:bg-gray-50"
-        >
-          <FaGoogle className="text-red-500" />
-          Google
-        </button>
-
-        <button
-          type="button"
-          className="flex items-center justify-center gap-2 rounded-xl border border-gray-300 py-3 hover:bg-gray-50"
-        >
-          <FaMicrosoft className="text-blue-500" />
-          Microsoft
-        </button>
-
-      </div> */}
 
       {/* Signup */}
 

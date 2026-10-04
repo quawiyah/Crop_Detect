@@ -5,8 +5,9 @@ import { FaBars } from "react-icons/fa";
 import ProfileCard from "./ProfileCard";
 import FarmDetails from "./FarmDetails";
 import Sidebar from "../../components/dashboard/Sidebar";
+import ApiConfig from "../../config/ApiConfig";
 
-const API_URL = "https://crop-disease-detector-8nqt.onrender.com";
+const API_URL = ApiConfig.getBaseUrl();
 
 function FarmerProfile() {
   const [editOpen, setEditOpen] = useState(false);

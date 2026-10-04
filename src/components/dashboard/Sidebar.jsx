@@ -28,6 +28,11 @@ const menuItems = [
     icon: <FaBroadcastTower />,
     path: "/smart",
   },
+  {
+    title: "Detector Reports",
+    icon: <FaBroadcastTower />,
+    path: "/detector-reports",
+  },
   // {
   //   title: "Sensor Monitoring",
   //   icon: <FaBroadcastTower />,
