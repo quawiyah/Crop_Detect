@@ -20,7 +20,7 @@ function SignupForm() {
     farmSize: "",
     crop: "",
     password: "",
-    token: "",
+    otp: "",
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -40,7 +40,7 @@ function SignupForm() {
       [name]: value,
     }));
 
-    // Reset verification state if email is changed after a token was sent
+    // Reset verification state if email is changed after an OTP was sent
     if (name === "email") {
       setVerificationSent(false);
       setVerificationMessage("");
@@ -62,7 +62,7 @@ function SignupForm() {
       farmSize,
       crop,
       password,
-      token,
+      otp,
     } = formData;
 
     if (!fullName.trim()) {
@@ -105,16 +105,16 @@ function SignupForm() {
       return "Password must be at least 6 characters.";
     }
 
-    // Require token if a verification code was sent
-    if (verificationSent && !token.trim()) {
-      return "Please enter the verification code sent to your email.";
+    // Require otp if a verification code (OTP) was sent
+    if (verificationSent && !otp.trim()) {
+      return "Please enter the OTP sent to your email.";
     }
 
     return null;
   };
 
-  // HANDLE SEND VERIFICATION TOKEN
-  const handleSendToken = async () => {
+  // HANDLE SEND VERIFICATION OTP
+  const handleSendOtp = async () => {
     const email = formData.email.trim();
 
     if (!email) {
@@ -145,17 +145,17 @@ function SignupForm() {
         const text = await response.text().catch(() => "");
         console.error("Send OTP failed:", response.status, text);
         throw new Error(
-            text || `Failed to send verification code (${response.status})`
+            text || `Failed to send OTP (${response.status})`
         );
       }
 
       setVerificationSent(true);
       setVerificationMessage(
-          "A verification code has been sent to your email."
+          "An OTP has been sent to your email."
       );
     } catch (err) {
-      console.error("SEND TOKEN ERROR", err);
-      setError(err.message || "Could not send verification code.");
+      console.error("SEND OTP ERROR", err);
+      setError(err.message || "Could not send OTP.");
     } finally {
       setVerifying(false);
     }
@@ -186,7 +186,7 @@ function SignupForm() {
         farmName: formData.farmName.trim(),
         farmLocation: formData.farmLocation.trim(),
         farmSize: String(formData.farmSize),
-        token: formData.token.trim(),
+        otp: formData.otp.trim(),
       };
 
       console.log("SIGNUP REQUEST");
@@ -287,7 +287,7 @@ function SignupForm() {
 
               <button
                   type="button"
-                  onClick={handleSendToken}
+                  onClick={handleSendOtp}
                   disabled={
                       loading ||
                       verifying ||
@@ -311,23 +311,23 @@ function SignupForm() {
             )}
           </div>
 
-          {/* VERIFICATION TOKEN (only shows after a code is sent) */}
+          {/* VERIFICATION OTP (only shows after an OTP is sent) */}
           {verificationSent && (
               <div>
                 <label
-                    htmlFor="token"
+                    htmlFor="otp"
                     className="mb-2 block text-sm font-semibold text-gray-700"
                 >
-                  Verification Code
+                  OTP Code
                 </label>
 
                 <input
-                    id="token"
+                    id="otp"
                     type="text"
-                    name="token"
-                    value={formData.token}
+                    name="otp"
+                    value={formData.otp}
                     onChange={handleChange}
-                    placeholder="Enter the code sent to your email"
+                    placeholder="Enter the OTP sent to your email"
                     inputMode="numeric"
                     disabled={loading}
                     className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-green-600 focus:ring-2 focus:ring-green-100 disabled:bg-gray-100"
