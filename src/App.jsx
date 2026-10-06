@@ -14,6 +14,8 @@ import Smart from "./pages/Smart";
 import CameraSetup from "./pages/CameraSetup";
 import DetectorReports from "./pages/DetectorReports";
 import NotFound from "./pages/NotFound";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+import ResetPassword from "./pages/ResetPassword.jsx";
 
 function App() {
   return (
@@ -31,7 +33,8 @@ function App() {
         <Route path="/smart" element={<ProtectedRoute><Smart /></ProtectedRoute>} />
         <Route path="/camera-setup" element={<ProtectedRoute><CameraSetup /></ProtectedRoute>} />
         <Route path="/detector-reports" element={<ProtectedRoute><DetectorReports /></ProtectedRoute>} />
-
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         {/* 404 Page */}
         <Route path="*" element={<NotFound />} />
       </Routes>
