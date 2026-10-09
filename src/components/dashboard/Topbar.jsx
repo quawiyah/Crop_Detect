@@ -1,7 +1,41 @@
-import { FaBars, FaBell, FaCalendarAlt } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { FaBars, FaCalendarAlt } from "react-icons/fa";
 
 function Topbar({ setSidebarOpen }) {
-  // Format today's date
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const loadUser = () => {
+      const storedUser = localStorage.getItem("user");
+
+      if (!storedUser) {
+        setUser(null);
+        return;
+      }
+
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error("Failed to parse stored user:", error);
+        setUser(null);
+      }
+    };
+
+    loadUser();
+
+    window.addEventListener("userUpdated", loadUser);
+
+    return () => {
+      window.removeEventListener("userUpdated", loadUser);
+    };
+  }, []);
+
+  const aiTokenBalance =
+    user?.aitokenBalance ??
+    user?.aiTokenBalance ??
+    user?.aitokenbalance ??
+    0;
+
   const today = new Date().toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
@@ -9,60 +43,44 @@ function Topbar({ setSidebarOpen }) {
   });
 
   return (
-    <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
-
-      {/* Left */}
-
+    <header className="mb-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
       <div className="flex items-center gap-4">
-
         <button
-          className="lg:hidden text-2xl"
+          className="text-2xl lg:hidden"
           onClick={() => setSidebarOpen(true)}
         >
           <FaBars />
         </button>
-        <div>
-            <h1 className="text-2xl font-bold text-gray-800">
-              Farm Overview
-            </h1>
 
-            <p className="text-gray-500 mt-2">
-              Precision insights for Sector 7-G
-              <span className="text-green-600 font-medium">
-                {" "}• Real-time sync active
-              </span>
-            </p>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-800">
+            Farm Overview
+          </h1>
+
+          <p className="mt-2 text-gray-500">
+            Precision insights for Sector 7-G
+            <span className="font-medium text-green-600">
+              {" "}• Real-time sync active
+            </span>
+          </p>
         </div>
       </div>
-
-      {/* Right */}
 
       <div className="flex items-center gap-5">
-
-        {/* Date */}
-
-        <div className="flex items-center gap-3 bg-white shadow rounded-xl px-5 py-3">
-
+        <div className="flex items-center gap-3 rounded-xl bg-white px-5 py-3 shadow">
           <FaCalendarAlt className="text-green-700" />
-
-          <span className="text-gray-600 text-sm">
-            {today}
-          </span>
-
+          <span className="text-sm text-gray-600">{today}</span>
         </div>
 
-        {/* Notification */}
-
-        {/* <button className="relative bg-white shadow rounded-xl p-3 hover:bg-gray-100 transition">
-
-          <FaBell className="text-green-700 text-lg" />
-
-          <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500"></span>
-
-        </button> */}
-
+        <div className="flex items-center gap-3 rounded-xl border border-green-200 bg-green-50 px-4 py-3 shadow-sm">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-green-700">
+            AI Tokens
+          </span>
+          <span className="text-sm text-gray-600">
+           # {aiTokenBalance}
+          </span>
+        </div>
       </div>
-
     </header>
   );
 }
